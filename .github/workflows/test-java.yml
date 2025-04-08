@@ -1,0 +1,28 @@
+name: Java Test # Tên workflow
+
+on: # Định nghĩa các sự kien de kich hoat workflow
+  pull_request: # su kien pull_request: khi co pull request dc mo hoac cap nhat
+    branches: # cac nhanh tac dong boi su kien
+      - main
+  push: # su kien push: khi co commit dc day len
+    branches:
+      - main
+
+jobs: # jobs la hang dong dc thuc hien trong su kien
+  window-job: # ten job
+    name: _Test on Windows # ten hien thi cua job
+    runs-on: windows-latest # job se chay tren mot moi truong ao voi he dieu hanh windows phien ban moi nhat
+
+    steps: # cac buoc thuc hien
+      - name: Checkout Code
+        uses: actions/checkout@v3 #Tac dung cua action: Clone toan bo ma nguon cua Repository
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3 #Tac dung cua action: Cai dat JDK
+        with:
+          distribution: 'temurin' # day la nha cung cap JDK
+          java-version: '22' # phien ban JDK
+
+      - name: Build and test on windows
+        run: mvn clean verify #Build du an
+        # Va thuc hien tat ca cac kiem thu dc dinh nghia trong du
